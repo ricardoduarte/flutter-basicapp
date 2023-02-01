@@ -29,7 +29,7 @@ class LocationList extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => LocationDetail(location),
+              builder: (context) => LocationDetail(index),
             ));
       },
     );
