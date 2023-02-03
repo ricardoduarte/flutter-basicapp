@@ -16,10 +16,12 @@ class LocationDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text(location.name, style: Styles.navBarTitle),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: _renderBody(location),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: _renderBody(location),
+        ),
       ),
     );
   }
