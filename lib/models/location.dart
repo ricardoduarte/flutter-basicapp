@@ -12,9 +12,15 @@ class Location {
   final int id;
   final String name;
   final String url;
-  final List<LocationFact> facts;
+  final List<LocationFact>? facts;
   
   Location({required this.id, required this.name, required this.url, required this.facts});
+
+  Location.blank()
+      : id = 0,
+        name = '',
+        url = '',
+        facts = [];
 
   factory Location.fromJson(Map<String, dynamic> json) =>
     _$LocationFromJson(json);
