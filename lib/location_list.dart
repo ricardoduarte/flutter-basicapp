@@ -18,7 +18,7 @@ class _LocationListState extends State<LocationList> {
     loadData();
   }
 
-  loadData() async {
+  Future<void> loadData() async {
     setState(() => loading = true);
     final locations = await Location.fetchAll();
     setState(() {
@@ -31,11 +31,14 @@ class _LocationListState extends State<LocationList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Locations', style: Styles.navBarTitle)),
-      body: Column(
-        children: [
-          renderProgressBar(context),
-          Expanded(child: renderListView(context)),
-        ],
+      body: RefreshIndicator(
+        onRefresh: loadData,
+        child: Column(
+          children: [
+            renderProgressBar(context),
+            Expanded(child: renderListView(context)),
+          ],
+        ),
       ),
     );
   }
