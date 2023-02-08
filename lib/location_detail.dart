@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'models/location.dart';
 import 'components/location_tile.dart';
+import 'components/default_app_bar.dart';
+import 'components/banner_image.dart';
 import 'styles.dart';
 
 const BannerImageHeight = 245.0;
@@ -42,9 +44,7 @@ class _LocationDetailState extends State<LocationDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(location.name, style: Styles.navBarTitle),
-      ),
+      appBar: DefaultAppBar(),
       body: Stack(
         children: [
           _renderBody(location),
@@ -56,9 +56,10 @@ class _LocationDetailState extends State<LocationDetail> {
 
   Widget _renderBody(Location location) {
     var result = <Widget>[];
-    result.add(_bannerImage(location.url, BannerImageHeight));
+    result.add(BannerImage(url: location.url, height: BannerImageHeight));
     result.add(_renderHeader());
     result.addAll(_renderFacts(location));
+    result.add(_renderBottomSpacer());
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -125,22 +126,6 @@ class _LocationDetailState extends State<LocationDetail> {
     );
   }
 
-  Widget _bannerImage(String url, double height) {
-    Image? image;
-    try {
-      if (url.isNotEmpty) {
-        image = Image.network(url, fit: BoxFit.fitWidth);
-      }
-    } catch (e) {
-      print('could not load image from $url');
-    }
-
-    return Container(
-      constraints: BoxConstraints.tightFor(height: height),
-      child: image,
-    );
-  }
-
   Widget _renderBookButton() {
     return TextButton(
       onPressed: _handleBookPress,
@@ -157,5 +142,9 @@ class _LocationDetailState extends State<LocationDetail> {
     if (!await launchUrl(url)) {
       throw 'Could not launch $url';
     }
+  }
+
+  Widget _renderBottomSpacer() {
+    return Container(height: FooterHeight);
   }
 }

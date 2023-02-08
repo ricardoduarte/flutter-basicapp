@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'models/location.dart';
 import 'components/location_tile.dart';
+import 'components/default_app_bar.dart';
+import 'components/banner_image.dart';
 import 'location_detail.dart';
 import 'styles.dart';
 
@@ -33,7 +35,7 @@ class _LocationListState extends State<LocationList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Locations', style: Styles.navBarTitle)),
+      appBar: DefaultAppBar(),
       body: RefreshIndicator(
         onRefresh: loadData,
         child: Column(
@@ -77,26 +79,11 @@ class _LocationListState extends State<LocationList> {
         height: ListItemHeight,
         child: Stack(
           children: [
-            _tileImage(location.url, MediaQuery.of(context).size.width, ListItemHeight),
+            BannerImage(url: location.url, height: ListItemHeight),
             _tileFooter(location),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _tileImage(String url, double width, double height) {
-    Image? image;
-    try {
-      image = Image.network(url, fit: BoxFit.cover);
-    }
-    catch (e) {
-      print('could not load image from $url');
-    }
-
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      child: image,
     );
   }
 
